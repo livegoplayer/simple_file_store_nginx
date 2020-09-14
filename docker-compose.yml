@@ -1,0 +1,19 @@
+version: '3'
+
+services:
+    go_server_nginx:
+      build: ./
+      container_name: go_file_store_nginx
+      environment:
+         USER_SERVER_NAME: "www.52db.club"
+         RESTY_CONFIG_OPTIONS_MORE: "--with-echo_nginx_module"
+      ports:
+         - "80"
+      volumes:
+         - ../:/apps
+         # 日志存放路径，需要同级目录创建本目录
+         - ../logs:/apps/logs
+         - ./conf/nginx/nginx.conf:/usr/local/openresty/nginx/conf/nginx_template.conf
+      command: /sh/init_openresty.sh
+
+
