@@ -1,3 +1,3 @@
 #!/bin/bash
-kubectl create namespace filestore
-kubectl create configmap filestore-nginx-config-map --from-file=conf/nginx -n filestore
+kubectl create namespace vue-file-store
+kubectl create configmap vue-file-store-nginx-config-map --from-file=conf/nginx -n vue-file-store
