@@ -84,7 +84,7 @@ spec:
           value: vue_file-store
         - name: SERVICE_TAGS
           value: vue_file-store,http,80
-        image: xjyplayer/simple_file-store_nginx:1.0.1
+        image: xjyplayer/simple_file_store_nginx:1.0.1
         imagePullPolicy: IfNotPresent
         name: file-store-nginx
         ports:
