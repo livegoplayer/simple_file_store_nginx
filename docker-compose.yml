@@ -3,7 +3,7 @@ version: '3'
 services:
     go_server_nginx:
       build: ./
-      container_name: go_file_store_nginx
+      container_name: vue_file_store_nginx
       environment:
          USER_SERVER_NAME: "vue.file.store.k8s.show"
          RESTY_CONFIG_OPTIONS_MORE: "--with-echo_nginx_module"

@@ -9,8 +9,8 @@ getBaseBinaryStr(){
 	local len=${#1}
 	local cnt=$((${#2}-$len))
 	local returnStr="$1"
-	while [[ $cnt>0 ]] 
-	do 
+	while [[ $cnt>0 ]]
+	do
 		returnStr="0$returnStr"
 		cnt=$(($cnt-1))
 	done
@@ -34,7 +34,7 @@ fi
 #worker_cpu_affinity
 #算出最大的cpu核数写法
 if [[ -z $WORKER_CPU_AFFINITY && $WORK_PROCESSES>0 ]]
-then 
+then
 	WORKER_CPU_AFFINITY="";
 	maxwcanum=$WORK_PROCESSES
 	maxwca="$(toBinaryStr $maxwcanum)"
@@ -59,7 +59,7 @@ if [[ -z $WORKER_RLIMIT_NOFILE  ]]
 then
 	fileMax=$(cat /proc/sys/fs/file-max)
 	unlimit=$(ulimit -n)
-	if [[ fileMax>unlimit ]]
+	if [[ $fileMax -gt $unlimit ]]
 	then
 		WORKER_RLIMIT_NOFILE=$unlimit
 	else
@@ -151,11 +151,11 @@ then
 	export LUA_REDIS_PORT=6379
 fi
 if [[ -z $LUA_REDIS_AUTH ]]
-then 
+then
 	export LUA_REDIS_AUTH=""
 fi
 if [[ -z $LUA_REDIS_DB ]]
-then 
+then
 	export LUA_REDIS_DB="3"
 fi
 
@@ -171,12 +171,12 @@ then
 	rm /usr/local/openresty/nginx/conf/nginx.conf
 fi
 
-cp /usr/local/openresty/nginx/conf/nginx_template.conf /usr/local/openresty/nginx/conf/nginx.conf  
+cp /usr/local/openresty/nginx/conf/nginx_template.conf /usr/local/openresty/nginx/conf/nginx.conf
 
 export WORKER_RLIMIT_NOFILE=${WORKER_RLIMIT_NOFILE}
 export WORKER_CONNECTIONS=${WORKER_CONNECTIONS}
 
-envsubst '$LOGPATH $USER_SERVER_NAME $user,$WORK_PROCESSES,${WORKER_RLIMIT_NOFILE},$WORKER_CPU_AFFINITY $WORKER_CONNECTIONS $ClIENT_HEADER_BUFFER_SIZE $ClIENT_BODY_BUFFER_SIZE'< /usr/local/openresty/nginx/conf/nginx_template.conf > /usr/local/openresty/nginx/conf/nginx.conf 
+envsubst '$LOGPATH $USER_SERVER_NAME $user,$WORK_PROCESSES,${WORKER_RLIMIT_NOFILE},$WORKER_CPU_AFFINITY $WORKER_CONNECTIONS $ClIENT_HEADER_BUFFER_SIZE $ClIENT_BODY_BUFFER_SIZE'< /usr/local/openresty/nginx/conf/nginx_template.conf > /usr/local/openresty/nginx/conf/nginx.conf
 
 if [[ -f /etc/nginx/config/http_limit_optimization.conf ]]
 then
